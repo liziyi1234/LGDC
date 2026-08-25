@@ -91,9 +91,9 @@ The **Context Guided Degradation Computation (CGDC)** module integrates the comp
 
 The overall architecture of LGDC is illustrated below.
 
-<p align="center">
-  <img src="/github.com/liziyi1234/LGDC/framework.jpg" width="90%">
-</p>
+```bash
+img src="/github.com/liziyi1234/LGDC/framework.jpg"
+```
 
 LGDC consists of four major components:
 
