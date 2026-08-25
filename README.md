@@ -1,153 +1,4 @@
 
-Introduction：
-LGDC is an omnidirectional image quality assessment method that takes a complete ERP image as input and predicts its quality score.
-
-Key Innovations:
-
-GPEC: Compensates for ERP projection distortion using latitude-longitude information
-
-MQCA: Multi-scale quality feature extraction
-
-ACDP: Adaptively captures distortions in different spatial regions
-
-CGDC: Fuses features from MQCA and ACDC
-
-
-Quick Start：
-
-Installation：
-
-git clone https://github.com/liziyi1234/LGDC.git
-
-cd LGDC
-
-pip install torch torchvision einops timm scipy pandas pillow tqdm
-
-Data Preparation
-
-Training：
-python train.py
-
-Inference 
-
-File Description:
-
-LGDC.py:	        Main model (MQCA + ACDC + CGDC)
-
-GPEC.py	:       Geometry compensation module
-
-train.py:	      Training entry point
-
-config.py:	      Configuration parameters
-
-MyDataset.py:	  Data loader
-
-utils.py :       Utility functions
-
-cyclic_shift.py:	Data augmentation
-
-Citation:
-
-@article{yan2026lgdc,
-
-  title={Viewport-Unaware Blind Omnidirectional Image Quality Assessment: Learning from Geometry-Deformed Content},
-  
-  author={Yan, Jiebin and Li, Ziyi and Wu, Kangcheng and Chen, Pengfei and Zuo, Yifan and Chen, Junjie and Fang, Yuming},
-  
-  year={2026}
-}
-
-# LGDC: Viewport-Unaware Blind Omnidirectional Image Quality Assessment
-
-<p align="center">
-  <b>Learning from Geometry-Deformed Content</b>
-</p>
-
-<p align="center">
-  <a href="#overview">Overview</a> •
-  <a href="#framework">Framework</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#data-preparation">Data Preparation</a> •
-  <a href="#training">Training</a> •
-  <a href="#inference">Inference</a> •
-  <a href="#citation">Citation</a>
-</p>
-
----
-
-## 📖 Overview
-
-**LGDC** is a viewport-unaware blind omnidirectional image quality assessment framework that directly takes a complete equirectangular projection (ERP) image as input and predicts its perceptual quality score.
-
-Unlike viewport-based approaches that require extracting multiple viewports, LGDC performs quality assessment directly on the complete ERP representation. The framework jointly models multi-scale quality contexts, distortion-sensitive spatial representations, and ERP-aware geometric priors.
-
-<div align="center">
-
-**ERP Image → Hierarchical Feature Extraction → MQCA + ACDP → CGDC → GPEC → Quality Score**
-
-</div>
-
----
-
-## ✨ Key Innovations
-
-### 🌐 GPEC: Geometry Prior Embedded Compensation
-
-GPEC explicitly incorporates spherical position and latitude-dependent geometric priors to compensate for the non-uniform spatial characteristics introduced by ERP projection.
-
-- Encodes latitude and longitude information.
-- Models latitude-dependent geometric characteristics.
-- Performs geometry-guided channel and spatial feature enhancement.
-
-### 🔍 MQCA: Multi-granular Quality Context Aggregation
-
-MQCA extracts complementary quality information from multiple receptive fields.
-
-- Captures multi-scale quality patterns through adaptive scale-aware aggregation.
-- Preserves fine-grained local quality details.
-- Incorporates global contextual information.
-
-### 🎯 ACDP: Adaptive Content-driven Degradation Perception
-
-ACDP adaptively captures distortion-sensitive spatial regions according to the input content.
-
-- Dynamically generates input-conditioned convolution kernels.
-- Models distortion patterns at multiple spatial scales.
-- Adaptively fuses multi-scale spatial responses.
-
-### 🔗 CGDC: Context Guided Degradation Computation
-
-CGDC integrates the complementary representations produced by MQCA and ACDP.
-
-- Combines multi-scale quality contexts with distortion-aware features.
-- Uses large and small receptive fields for complementary feature extraction.
-- Employs gated fusion to adaptively balance broad context and fine-grained details.
-
----
-
-## 🏗 Framework
-
-The overall architecture of LGDC is illustrated below.
-
-<p align="center">
-  <img src="figures/framework.png" width="90%">
-</p>
-
-The framework consists of four major components:
-
-| Module | Description |
-|:---|:---|
-| **MQCA** | Extracts multi-granular quality contexts from hierarchical features |
-| **ACDP** | Adaptively perceives distortion-sensitive spatial patterns |
-| **CGDC** | Integrates quality-context and distortion-aware representations |
-| **GPEC** | Incorporates ERP geometric priors for feature compensation |
-
----
-
-## ⚙️ Installation
-
-
-
 
 # LGDC: Viewport-Unaware Blind Omnidirectional Image Quality Assessment
 
@@ -241,7 +92,7 @@ The **Context Guided Degradation Computation (CGDC)** module integrates the comp
 The overall architecture of LGDC is illustrated below.
 
 <p align="center">
-  <img src="figures/framework.png" width="90%">
+  <img src="figures/framework.jpg" width="90%">
 </p>
 
 LGDC consists of four major components:
@@ -262,27 +113,23 @@ LGDC consists of four major components:
 ```bash
 git clone https://github.com/liziyi1234/LGDC.git
 cd LGDC
-
-### Clone the repository
-
-```bash
-git clone https://github.com/liziyi1234/LGDC.git
-cd LGDC
-
+```
 ---
 
 ---
 
-##  📂 Data Preparation
+## 📂 Data Preparation
 
-Please organize your dataset according to the structure below.
+Please prepare the image quality assessment datasets before training and organize them according to the following structure:
+
+```text
 LGDC/
 ├── datasets/
-│   ├── Dataset1/
+│   ├── OIQA_Dataset/
 │   │   ├── images/
 │   │   └── labels/
 │   │
-│   └── Dataset2/
+│   └── IQA_Dataset/
 │       ├── images/
 │       └── labels/
 │
@@ -293,5 +140,65 @@ LGDC/
 ├── MyDataset.py
 ├── utils.py
 └── cyclic_shift.py
+```
+The dataset paths, training settings, and other experimental configurations can be specified in:
+
+```text
+config.py
+```
+---
+
+##  🚀 Training
+
+To train LGDC, simply run:
+
+```bash
+python train.py
+```
+Training configurations, including the dataset, learning rate, batch size, number of epochs, and other hyperparameters, can be modified in:
+
+```bash
+config.py
+```
+
+---
+
+##  🔮 Inference
+
+To perform inference using a trained LGDC model, please specify the checkpoint path and input image path in the corresponding inference configuration or script.
+Example:
+
+```bash
+python train.py
+```
+Note: Please make sure that the model checkpoint and input image paths are correctly configured before running inference.
+
+---
+
+##  📊 Performance
+
+LGDC is designed as a unified framework for blind image quality assessment across omnidirectional and planar images.
+
+For omnidirectional image quality assessment, LGDC directly processes complete ERP images without viewport extraction. The framework jointly captures multi-scale quality contexts, distortion-sensitive spatial patterns, and geometry-aware representations.
+
+For conventional 2D image quality assessment, the coordinate embedding branch in GPEC can be disabled while retaining the remaining network architecture, allowing LGDC to be applied to planar images without introducing explicit spherical coordinate embeddings.
+
+Experimental results demonstrate that LGDC achieves competitive performance across multiple omnidirectional and 2D image quality assessment databases.
+
+Please refer to our paper for detailed experimental results and comparisons.
+
+---
+
+##  📝 Citation
+
+If you find this repository useful for your research, please consider citing our work:
+
+```bibtex
+@article{yan2026lgdc,
+  title={Viewport-Unaware Blind Omnidirectional Image Quality Assessment: Learning from Geometry-Deformed Content},
+  author={Yan, Jiebin and Li, Ziyi and Wu, Kangcheng and Chen, Pengfei and Zuo, Yifan and Chen, Junjie and Fang, Yuming},
+  year={2026}
+}
+```
 
 ---
