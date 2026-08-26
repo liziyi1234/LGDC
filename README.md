@@ -3,11 +3,12 @@
 # LGDC: Viewport-Unaware Blind Omnidirectional Image Quality Assessment
 
 <p align="center">
-  <b>Learning from Geometry-Deformed Content</b>
+  <b>Viewport-Unaware Blind Omnidirectional Image Quality Assessment: Learning from Geometry-Deformed Content</b>
 </p>
 
 <p align="center">
   <a href="#overview">Overview</a> •
+  <a href="#key-features">Key Features</a> •
   <a href="#framework">Framework</a> •
   <a href="#installation">Installation</a> •
   <a href="#data-preparation">Data Preparation</a> •
@@ -166,22 +167,18 @@ config.py
 ##  🔮 Inference
 
 To perform inference using a trained LGDC model, please specify the checkpoint path and input image path in the corresponding inference configuration or script.
-Example:
 
-```bash
-python train.py
-```
-Note: Please make sure that the model checkpoint and input image paths are correctly configured before running inference.
+**Note:** Please make sure that the model checkpoint and input image paths are correctly configured before running inference.
 
 ---
 
 ##  📊 Performance
 
-LGDC is designed as a unified framework for blind image quality assessment across omnidirectional and planar images.
+LGDC is designed as a unified framework for blind image quality assessment across omnidirectional and 2D images.
 
-For omnidirectional image quality assessment, LGDC directly processes complete ERP images without viewport extraction. The framework jointly captures multi-scale quality contexts, distortion-sensitive spatial patterns, and geometry-aware representations.
+For **Omnidirectional Image Quality Assessment**, LGDC directly processes complete ERP images without viewport extraction. The framework jointly captures multi-scale quality contexts, distortion-sensitive spatial patterns, and geometry-aware representations.
 
-For conventional 2D image quality assessment, the coordinate embedding branch in GPEC can be disabled while retaining the remaining network architecture, allowing LGDC to be applied to planar images without introducing explicit spherical coordinate embeddings.
+For  **Image Quality Assessment**, the coordinate embedding branch in GPEC can be disabled while retaining the remaining network architecture, allowing LGDC to be applied to planar images without introducing explicit spherical coordinate embeddings.
 
 Experimental results demonstrate that LGDC achieves competitive performance across multiple omnidirectional and 2D image quality assessment databases.
 
